@@ -1,0 +1,52 @@
+---
+title: Impact of Modified Milk Formula on Infant Severe Acute Malnutrition
+author: Santino Diaz-Palma, Dongsoo Lee, Victoria Ngo
+output: html_document
+---
+```{r, here-i-am, include = FALSE}
+here::i_am(
+  "report.Rmd"
+)
+```
+
+
+```{r, load-tables-figures, include = FALSE}
+table1 <- here::here("output/vn_table1.rds")
+
+table2 <- here::here("output/vn_table2.rds")
+
+figure1 <- here::here("output/sdp_figure1.png")
+
+figure2 <- here::here("output/sdp_figure2.png")
+```
+
+
+# Table 1. 
+```{r}
+readRDS(
+  file = (table1)
+)
+```
+
+# Table 2.
+```{r}
+readRDS(
+  file = (table2)
+)
+```
+
+# Figure 1.
+```{r}
+#| fig.align = "center",
+#| out.width = "600px"
+knitr::include_graphics(figure1)
+```
+
+# Figure 2.
+```{r}
+#| fig.align = "center",
+#| out.width = "600px"
+knitr::include_graphics(figure2)
+```
+
+
