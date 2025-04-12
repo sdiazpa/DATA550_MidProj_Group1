@@ -2,6 +2,9 @@
 title: Impact of Modified Milk Formula on Infant Severe Acute Malnutrition
 author: Santino Diaz-Palma, Dongsoo Lee, Victoria Ngo
 output: html_document
+params:
+  table_run: TRUE
+  figure_run: TRUE
 ---
 ```{r, here-i-am, include = FALSE}
 here::i_am(
@@ -22,28 +25,28 @@ figure2 <- here::here("output/sdp_figure2.png")
 
 
 # Table 1. 
-```{r}
+```{r, include=params$table_run}
 readRDS(
   file = (table1)
 )
 ```
 
 # Table 2.
-```{r}
+```{r, include=params$table_run}
 readRDS(
   file = (table2)
 )
 ```
 
 # Figure 1.
-```{r}
+```{r, include=params$figure_run}
 #| fig.align = "center",
 #| out.width = "600px"
 knitr::include_graphics(figure1)
 ```
 
 # Figure 2.
-```{r}
+```{r, include=params$figure_run}
 #| fig.align = "center",
 #| out.width = "600px"
 knitr::include_graphics(figure2)
