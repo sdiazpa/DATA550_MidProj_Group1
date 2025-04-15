@@ -6,7 +6,7 @@ f75_interim <- read.csv(here::here("data/f75_interim.csv"))
 
 
 
-# long dataset for MUAC and Weight
+### pivot long data set
 muac_long <- f75_interim %>%
     select(subjid, muac, muac1, muac2) %>%
     pivot_longer(cols = c(muac, muac1, muac2),

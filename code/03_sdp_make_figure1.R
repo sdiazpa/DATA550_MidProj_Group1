@@ -4,6 +4,9 @@ pacman::p_load(ggplot2)
 
 f75_interim <- read.csv(here::here("data/f75_interim.csv"))
 
+
+
+
 ##### Study Site  ####
 studysite_plot <- ggplot(f75_interim, aes(x = site, fill = site)) +
     geom_bar(aes(y = ..count../sum(..count..))) +
@@ -11,7 +14,7 @@ studysite_plot <- ggplot(f75_interim, aes(x = site, fill = site)) +
     labs(title = "Study Site Distribution", x = "Site", y = "Proportion") +
     theme_light() +
     theme(
-        plot.title = element_text(hjust = 0.5, size = 16)
+        plot.title = element_text(hjust = 0.5, size = 17)
     )
 
 ggsave(
