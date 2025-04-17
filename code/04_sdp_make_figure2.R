@@ -1,12 +1,12 @@
 here::i_am("code/04_sdp_make_figure2.R")
 
-pacman::p_load(tidyverse, ggplot2)
+pacman::p_load(tidyverse, patchwork, here)
 
 f75_interim <- read.csv(here::here("data/f75_interim.csv"))
 
 
 
-### pivot long data set
+# Pivot MUAC data
 muac_long <- f75_interim %>%
     select(subjid, muac, muac1, muac2) %>%
     pivot_longer(cols = c(muac, muac1, muac2),
@@ -17,6 +17,7 @@ muac_long <- f75_interim %>%
                           muac1 = "Stabilization",
                           muac2 = "Discharge"))
 
+# Pivot Weight data
 weight_long <- f75_interim %>%
     select(subjid, weight, weight1, weight2) %>%
     pivot_longer(cols = c(weight, weight1, weight2),
@@ -27,9 +28,7 @@ weight_long <- f75_interim %>%
                           weight1 = "Stabilization",
                           weight2 = "Discharge"))
 
-
-
-#### muac ####
+# MUAC plot
 muac_plot <- ggplot(muac_long, aes(x = stage, y = muac_value, fill = stage)) +
     geom_boxplot() +
     labs(title = "MUAC Across Treatment Stages", x = "Stage", y = "MUAC (cm)") +
@@ -39,16 +38,7 @@ muac_plot <- ggplot(muac_long, aes(x = stage, y = muac_value, fill = stage)) +
         plot.title = element_text(hjust = 0.5, size = 16)
     )
 
-ggsave(
-    here::here("output/barplot-muac.png"),
-    plot = muac_plot,
-    device = "png"
-)
-
-
-
-
-
+# Weight plot
 weight_plot <- ggplot(weight_long, aes(x = stage, y = weight_value, fill = stage)) +
     geom_boxplot() +
     labs(title = "Weight Across Treatment Stages", x = "Stage", y = "Weight (kg)") +
@@ -58,9 +48,17 @@ weight_plot <- ggplot(weight_long, aes(x = stage, y = weight_value, fill = stage
         plot.title = element_text(hjust = 0.5, size = 16)
     )
 
-ggsave(
-    here::here("output/barplot-weight.png"),
-    plot = weight_plot,
-    device = "png"
-)
+# Combine plots
+combined_growth_plot <- muac_plot / weight_plot +
+    plot_annotation(
+        title = "Weight and MUAC Across Treatment Stages",
+        theme = theme(plot.title = element_text(hjust = 0.5, size = 18, face = "bold"))
+    )
 
+ggsave(
+    here("output", "sdp_figure2.png"),
+    plot = combined_growth_plot,
+    width = 10,
+    height = 10,
+    dpi = 300
+)

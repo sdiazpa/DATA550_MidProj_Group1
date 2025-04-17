@@ -17,16 +17,6 @@ studysite_plot <- ggplot(f75_interim, aes(x = site, fill = site)) +
         plot.title = element_text(hjust = 0.5, size = 17)
     )
 
-ggsave(
-    here::here("output/barplot-study_site.png"),
-    plot = studysite_plot,
-    device = "png"
-)
-
-
-
-
-
 
 ##### Sex  ####
 sex_plot <- ggplot(f75_interim, aes(x = sex, fill = sex)) +
@@ -38,15 +28,6 @@ sex_plot <- ggplot(f75_interim, aes(x = sex, fill = sex)) +
         plot.title = element_text(hjust = 0.5, size = 16)
     )
 
-ggsave(
-    here::here("output/barplot-age.png"),
-    plot = sex_plot,
-    device = "png"
-)
-
-
-
-
 
 
 ##### Age   ####
@@ -57,12 +38,6 @@ age_plot <- ggplot(f75_interim, aes(y = agemons)) +
     theme(
         plot.title = element_text(hjust = 0.5, size = 16)
     )
-
-ggsave(
-    here::here("output/boxplot-age.png"),
-    plot = age_plot,
-    device = "png"
-)
 
 
 
@@ -79,11 +54,32 @@ height_plot <- ggplot(f75_interim, aes(y = height)) +
     )
 
 
-ggsave(
-    here::here("output/boxplot-height.png"),
-    plot = height_plot,
-    device = "png"
-)
 
+
+
+
+# Make sure patchwork is installed
+# install.packages("patchwork")
+
+library(ggplot2)
+library(patchwork)
+library(here)
+
+# Combine plots
+combined_plot <- (studysite_plot | sex_plot) /
+    (age_plot | height_plot) +
+    plot_annotation(
+        title = "Certain Variable Overview",
+        theme = theme(plot.title = element_text(hjust = 0.5, size = 18, face = "bold"))
+    )
+
+# Save the combined figure
+ggsave(
+    here("output", "sdp_figure1.png"),
+    plot = combined_plot,
+    width = 12,
+    height = 10,
+    dpi = 300
+)
 
 
